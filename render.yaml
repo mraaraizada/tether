@@ -29,7 +29,7 @@ services:
     name: tether-web
     runtime: static
     buildCommand: npm install && npm run build
-    staticPublishPath: apps/web/dist
+    staticPublishPath: dist
     envVars:
       # Full URL including https://, e.g. https://tether-api.onrender.com
       - key: VITE_API_URL
