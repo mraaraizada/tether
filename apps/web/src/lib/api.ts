@@ -35,9 +35,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     ...init,
   }).catch((error: Error) => {
     if (error.name === 'AbortError') throw error
-    // A rejected fetch on a deployed page is almost always CORS or a wrong
-    // host, not a down server — so name the URL that was actually tried.
-    throw new ApiError(`Cannot reach the API at ${BASE || window.location.origin}${path}`)
+    throw new ApiError('Cannot reach the API.')
   })
   if (!response.ok) {
     const body = (await response.json().catch(() => null)) as { error?: string } | null
