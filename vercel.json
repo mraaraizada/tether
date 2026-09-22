@@ -5,13 +5,17 @@
   "installCommand": "npm install",
   "framework": null,
   "functions": {
-    "api/[[...path]].ts": {
+    "api/index.ts": {
       "memory": 1024,
       "maxDuration": 60,
       "includeFiles": "{data,.cache}/**"
     }
   },
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index?__path=$1"
+    },
     {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
