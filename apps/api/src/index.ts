@@ -286,8 +286,14 @@ app.post('/api/cache/clear', localOnly, (_req, res) => {
   res.json({ ok: true })
 })
 
-app.use((_req, res) => {
-  res.status(404).json({ error: 'Not found' })
+app.use((req, res) => {
+  // The received path is echoed because platform routing can rewrite it
+  // before Express sees it, and a bare "Not found" hides that completely.
+  res.status(404).json({
+    error: 'Not found',
+    received: req.originalUrl,
+    routes: ['/api/health', '/api/corpus', '/api/experts/:id/answers', '/api/analysis', '/api/ask'],
+  })
 })
 
 // Final handler: JSON out, no stack traces over the wire.
