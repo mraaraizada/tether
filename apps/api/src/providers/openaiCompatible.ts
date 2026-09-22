@@ -97,16 +97,28 @@ ${JSON.stringify(request.schema, null, 2)}`
     }
   }
 
-  private post(body: unknown): Promise<Response> {
-    return fetch(`${this.baseUrl.replace(/\/$/, '')}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(this.apiKey ? { Authorization: `Bearer ${this.apiKey}` } : {}),
-      },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(Number(process.env.MODEL_TIMEOUT_MS ?? 300_000)),
-    })
+  private async post(body: unknown): Promise<Response> {
+    const url = `${this.baseUrl.replace(/\/$/, '')}/chat/completions`
+
+    try {
+      return await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(this.apiKey ? { Authorization: `Bearer ${this.apiKey}` } : {}),
+        },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(Number(process.env.MODEL_TIMEOUT_MS ?? 300_000)),
+      })
+    } catch (error) {
+      // Node's fetch reports every transport problem as "fetch failed" and
+      // hides the real reason in `cause`. On a deployed box that is the
+      // difference between a DNS failure, a blocked egress and a TLS error,
+      // so it is unwrapped here rather than left to guesswork.
+      const cause = (error as { cause?: { code?: string; message?: string } }).cause
+      const detail = cause?.code ?? cause?.message ?? (error as Error).message
+      throw new Error(`Cannot reach ${url}: ${detail}`)
+    }
   }
 }
 
