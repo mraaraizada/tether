@@ -21,7 +21,9 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
         {message}
       </p>
       <p className="mt-1 text-[12px] text-[#9a4b12]/80">
-        Is the API running? Start it with <code className="font-mono">npm run dev:api</code>.
+        Locally, start it with <code className="font-mono">npm run dev:api</code>. On a deployment, check that{' '}
+        <code className="font-mono">VITE_API_URL</code> and the API&apos;s{' '}
+        <code className="font-mono">CORS_ORIGIN</code> agree.
       </p>
       {onRetry && (
         <button
