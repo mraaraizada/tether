@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Tether">
+  <!-- Same mark as src/components/Logo.tsx, scaled for a favicon:
+       heavier stroke and a larger centre dot so it survives 16px. -->
+  <rect width="64" height="64" rx="16" fill="#d7f56a" />
+  <g transform="translate(32 32)">
+    <path
+      d="M0 -17.5a17.5 17.5 0 1 0 17.5 17.5c0 -2.2 -0.4 -4.2 -1 -6"
+      fill="none"
+      stroke="#1c1c24"
+      stroke-width="6.5"
+      stroke-linecap="round"
+    />
+    <circle r="6.2" fill="#1c1c24" />
+  </g>
+</svg>

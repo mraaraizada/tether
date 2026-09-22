@@ -1,0 +1,33 @@
+{
+  "name": "tether",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Grounded analysis of expert-call transcripts: guide answers, verbatim quotes with timestamps, cross-call themes, and Q&A across the corpus.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web -c magenta,cyan \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev --workspace @tether/api",
+    "dev:web": "npm run dev --workspace @tether/web",
+    "build": "npm run build --workspace @tether/web",
+    "preview": "npm run preview --workspace @tether/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "verify": "npm run verify --workspace @tether/api",
+    "lint": "prettier --check \"**/*.{ts,tsx,css,md,json}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,css,md,json}\"",
+    "check": "npm run typecheck && npm run verify && npm run build",
+    "precompute": "node scripts/precompute.mjs",
+    "start": "npm run start --workspace @tether/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.6.3"
+  }
+}
