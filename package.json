@@ -15,7 +15,7 @@
     "dev": "concurrently -n api,web -c magenta,cyan \"npm:dev:api\" \"npm:dev:web\"",
     "dev:api": "npm run dev --workspace @tether/api",
     "dev:web": "npm run dev --workspace @tether/web",
-    "build": "npm run build --workspace @tether/web",
+    "build": "npm run build --workspace @tether/web && node scripts/mirror-dist.mjs",
     "preview": "npm run preview --workspace @tether/web",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "verify": "npm run verify --workspace @tether/api",
